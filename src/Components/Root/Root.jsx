@@ -5,14 +5,20 @@ import Header from '../Header/Header';
 import Headphones from '../Headphones/Headphones';
 import Footer from '../Footer/Footer';
 import Sidebar from '../Sidebar/Sidebar';
-import "./root.css"
+import "./root.css";
+import { useNavigation } from 'react-router';
 
 const Root = () => {
+
+    const navigation = useNavigation();
+    const isNavigating = Boolean(navigation.location);
+
     return (
         <div>
             <Header></Header>
             <div className='main'>
-               <Sidebar></Sidebar>
+                <Sidebar></Sidebar>
+                {isNavigating && < span>Loading....</span>}
                 <Outlet></Outlet>
             </div>
             
