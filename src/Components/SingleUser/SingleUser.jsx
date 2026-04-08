@@ -1,12 +1,14 @@
 import React, { Suspense, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, Navigate, useLocation } from 'react-router';
 import Info from '../Info/Info';
 
 const SingleUser = ({ user }) => {
-    const [showInfo, setShowInfo]= useState(false)
+    const [showInfo, setShowInfo] = useState(false);
+    const [visitHome, setVisitHome] = useState(false);
+    const location = useLocation();
+    console.log(location);
 
     const { id, name, email, phone } = user;
-
     const userPromise= fetch(`https://jsonplaceholder.typicode.com/users/${id}`).then(res => res.json())
     
     const cardStyle = {
@@ -14,6 +16,10 @@ const SingleUser = ({ user }) => {
         borderRadius: "5px",
         padding: "10px",
         margin: "5px"
+    };
+
+    if (visitHome) {
+        return <Navigate to="/"></Navigate>
     }
     return (
         <div style={cardStyle}>
@@ -28,6 +34,7 @@ const SingleUser = ({ user }) => {
                     <Info userPromise={userPromise}></Info>
                 </Suspense>
             }
+            <button onClick={() => setVisitHome(true)}>Visit Home</button>
         </div>
     );
 };
